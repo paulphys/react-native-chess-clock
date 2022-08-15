@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         //fontWeight: 'bold',
         fontSize: 18,
-        fontFamily: 'Arimo_700Bold',
+        fontFamily: 'Inter_700Bold',
         color: "#333"
     },
     inputsContainer: {

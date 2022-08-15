@@ -3,124 +3,52 @@ import { StyleSheet, View, Button, Modal, Text, TextInput, Image, KeyboardAvoidi
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Formik } from 'formik';
-import * as yup from 'yup';
 import CustomButton from '../components/button';
 import Card from '../components/card';
 
-const TimersSchema = yup.object().shape({
-    whiteHoursTimer: yup.number().integer().min(0,"Number too small").max(11,"Number too big").typeError("Provide a positice number, less than 11"),
-    whiteMinutesTimer: yup.number().integer().min(0,"Number too small").max(59,"Number too big").typeError("Provide a positice number, less than 60"),
-    whiteSecondsTimer: yup.number().integer().min(0,"Number too small").max(59,"Number too big").typeError("Provide a positice number, less than 60"),
-    blackHoursTimer: yup.number().integer().min(0,"Number too small").max(11,"Number too big").typeError("Provide a positice number, less than 11"),
-    blackMinutesTimer: yup.number().integer().min(0,"Number too small").max(59,"Number too big").typeError("Provide a positice number, less than 60"),
-    blackSecondsTimer: yup.number().integer().min(0,"Number too small").max(59,"Number too big").typeError("Provide a positice number, less than 60"),
-})
-
 
 export default function Menu({showModal, openAndCloseModal, showGames, openAndCloseGames, setTimers, resetTimers, moveCounter, pauseGame}){
-
     return(
         <View style={styles.menu}>
-            <KeyboardAvoidingView behavior="padding">
-                <Modal visible={showModal} animationType='none'>           
-                    <View style={styles.modal}>      
-                        <View style={styles.container}>
-                            <Formik
-                                initialValues={{
-                                    whiteHoursTimer: 0,
-                                    whiteMinutesTimer: 0,
-                                    whiteSecondsTimer: 0,
-                                    blackHoursTimer: 0,
-                                    blackMinutesTimer: 0,
-                                    blackSecondsTimer: 0,
-                                    showMoves: false
-                                }}
-                                validationSchema={TimersSchema}
-                                onSubmit = {(values) => {
-                                    let whiteTimer = values.whiteHoursTimer * 3600000 + values.whiteMinutesTimer * 60000 + values.whiteSecondsTimer * 1000;
-                                    let blackTimer = values.blackHoursTimer * 3600000 + values.blackMinutesTimer * 60000 + values.blackSecondsTimer * 1000;
-                                    setTimers(whiteTimer, blackTimer);
-                                }}
-                                >
-                                {(props) => (
-                                    <View>                                    
-                                        <Card>
-                                            <Text style={styles.space}></Text>
-                                            <Text style={styles.text}>Timer</Text>                                  
-                                            <View style={styles.inputsContainer}>
-                                                <Text>H:</Text>
-                                                <TextInput
-                                                    placeholder="0"
-                                                    textAlign={'center'}
-                                                    onChangeText={props.handleChange('whiteHoursTimer')}
-                                                    style={styles.input}
-                                                    value={props.values.title} //?
-                                                    keyboardType='numeric'
-                                                />
-                                                <Text>Min:</Text>
-                                                <TextInput
-                                                    placeholder="5"
-                                                    textAlign={'center'}
-                                                    onChangeText={props.handleChange('whiteMinutesTimer')}
-                                                    style={styles.input}
-                                                    value={props.values.title} //?
-                                                    keyboardType='numeric'
-                                                />
-                                                <Text>Sec:</Text>
-                                                <TextInput
-                                                    placeholder="0"
-                                                    textAlign={'center'}
-                                                    onChangeText={props.handleChange('whiteSecondsTimer')}
-                                                    style={styles.input}
-                                                    value={props.values.title} //?
-                                                    keyboardType='numeric'
-                                                />
-                                            </View>
-                                            <Text style={styles.text}>Variants</Text>      
-
-                                            <Text style={styles.errorText}>{(props.touched.whiteHoursTimer && props.errors.whiteHoursTimer) || (props.touched.whiteMinutesTimer && props.errors.whiteMinutesTimer) || (props.touched.whiteSecondsTimer && props.errors.whiteSecondsTimer)}</Text>
-                                        </Card>
-                                                                    
-                                            <CustomButton text='Save changes' color='black' onPress={props.handleSubmit}/>
-                                            <Text style={styles.space}></Text>
-                                            <CustomButton text='Close' color='red' onPress={openAndCloseModal}/>
-                                                                                                            
-                                    </View>
-                                )}
-                            </Formik>
+            <Modal visible={showModal} animationType='none'>           
+                <View style={styles.modal}>      
+                    <View style={styles.container}>
+                        <CustomButton text="1" time="1" setTimers={setTimers}/>
+                        <CustomButton text="3" time="3" setTimers={setTimers}/>
+                        <CustomButton text="5" time="5" setTimers={setTimers}/>
+                        <CustomButton text="10" time="10" setTimers={setTimers}/>
+                        <CustomButton text="15" time="15" setTimers={setTimers}/>
+                        <CustomButton text="30" time="30" setTimers={setTimers}/>
+                   </View>    
                         </View>
-                    </View>
+                  
                 </Modal>
 
                 <Modal visible={showGames} animationType='none'>           
-                    <View style={styles.modal}>      
-                        <Card>
-                                            <Text style={styles.space}></Text>
-                                            <Text style={styles.text}>Games</Text>        
-                                            </Card>       
-
-                                            <CustomButton text='Back' color='black' onPress={openAndCloseGames}/>
-                                                                                                            
-                      
+                    <View style={styles.modal}>           
+                        <CustomButton text='Back' color='black' onPress={openAndCloseGames}/>
                     </View>
                 </Modal>
-
                 
-            </KeyboardAvoidingView>
-
-            <MaterialIcons style={styles.icon} size={37} color="#333" name="replay" onPress={resetTimers}/>
-                <Text style={styles.icon}>{moveCounter == 0 ? <MaterialIcons style={styles.icon} size={38} color="#333" name="view-list" onPress={openAndCloseGames}/> : <Text style={styles.text}> Move: {moveCounter} </Text>}</Text>
-            <Text style={styles.icon}>{moveCounter == 0 ? <MaterialIcons style={styles.icon} size={35} color="#333" name="settings" onPress={openAndCloseModal} /> : <MaterialIcons style={styles.icon} size={37} color="#333" name="pause" onPress={pauseGame}/>}</Text>
+            <MaterialIcons style={styles.icon} size={34} color="white" name="replay" onPress={resetTimers}/>
+                <Text style={styles.icon}>{moveCounter == 0 ? <MaterialIcons style={styles.icon} size={35} color="white" name="view-list" onPress={openAndCloseGames}/> : <Text style={styles.text}> Move {moveCounter} </Text>}</Text>
+            <Text style={styles.icon}>{moveCounter == 0 ? <MaterialIcons style={styles.icon} size={34} color="white" name="settings" onPress={openAndCloseModal} /> : <MaterialIcons style={styles.icon} size={34} color="white" name="pause" onPress={pauseGame}/>}</Text>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    timebutton: {
+        backgroundColor: "black",
+
+    },
     menu: {
         //flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-around',
-        padding: 2
+        padding: 2,
+
+        
     },
     icon: {
         paddingHorizontal: 40,
@@ -131,6 +59,7 @@ const styles = StyleSheet.create({
     },
     modal: {
         flex: 1,
+        backgroundColor: "black",
     },
     input: {
         borderWidth: 1,
@@ -142,17 +71,20 @@ const styles = StyleSheet.create({
         flex: 1
     },
     container: {
+        marginTop: 50,
         flex: 1,
         padding: 16,
+        
+        
     },
     text: {
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'center',
         //fontWeight: 'bold',
-        fontSize: 19,
-        fontFamily: 'Arimo_700Bold',
-        color: "#333"
+        fontSize: 20,
+        fontFamily: 'Inter_700Bold',
+        color: "white"
     },
     inputsContainer: {
         flexDirection: 'row',
@@ -163,7 +95,8 @@ const styles = StyleSheet.create({
         textAlignVertical: 'center'
     },
     space: {
-        fontSize: 4
+        fontSize: 4,
+        
     },
     errorText: {
         color: 'crimson',

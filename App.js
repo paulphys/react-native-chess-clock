@@ -2,16 +2,16 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect, useContext } from 'react';
 import AppLoading from 'expo-app-loading';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, Modal } from 'react-native';
-import { useFonts, Arimo_400Regular, Arimo_700Bold } from '@expo-google-fonts/arimo';
+import { useFonts, Inter_400Regular, Inter_700Bold } from '@expo-google-fonts/inter';
 import Menu from './components/menu';
 import Games from './components/games'
-import {Timer } from './lib/react-native-stopwatch-timer';
+import { Timer } from './lib/stopwatch';
 
 
+ 
 export default function App() {
 
   let winner = "white";
-  
   let white = 600000;
   let black = 600000;
 
@@ -133,8 +133,8 @@ export default function App() {
   );
 
   let [fontsLoaded] = useFonts({
-    Arimo_400Regular,
-    Arimo_700Bold
+    Inter_400Regular,
+    Inter_700Bold
   })
 
   if(!fontsLoaded){
@@ -209,18 +209,18 @@ const styles = StyleSheet.create({
     flex: 5
   },
   menu: {
-    backgroundColor: '#808080',
+    backgroundColor: '#252525',
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1
   },
   blackFieldText: {
-    fontFamily: 'Arimo_700Bold',
+    fontFamily: 'Inter_700Bold',
     color: 'white',
     fontSize: 70
   },
   whiteFieldText: {
-    fontFamily: 'Arimo_700Bold',
+    fontFamily: 'Inter_700Bold',
     color: 'black',
     fontSize: 70
   },
@@ -245,7 +245,7 @@ const whiteFieldOptions = {
     
   },
   text: {
-    fontFamily: 'Arimo_700Bold',
+    fontFamily: 'Inter_700Bold',
     color: 'black',
     fontSize: 80
   },
@@ -259,7 +259,7 @@ const blackFieldOptions = {
     
   },
   text: {
-    fontFamily: 'Arimo_700Bold',
+    fontFamily: 'Inter_700Bold',
     color: 'white',
     fontSize: 80
   },

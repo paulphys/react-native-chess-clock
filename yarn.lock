@@ -1068,20 +1068,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@expo-google-fonts/arimo@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@expo-google-fonts/arimo/-/arimo-0.1.0.tgz#464e99095490ee35251d4412df4deab676cd6ee3"
-  integrity sha512-OV/3e1lgsphAsBMz+FUJSVzz5o77JyjJ+LY1zWM6cU12/DNs/cAWBtDlqusQBi6ykwE9a69ySWyNeovNU/MhAw==
-
-"@expo-google-fonts/orbitron@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@expo-google-fonts/orbitron/-/orbitron-0.1.0.tgz#17cc2608f563f4ccd2af5e8eb968ff9bb8a0902a"
-  integrity sha512-wR6gQHdvux6wb+As8r+9TF9MLaR9E6+5DYddjtNaRgDlaPH8ssG/Ib8DkKF0xVHAO84yG13abMN5HzHW2r+dYA==
-
-"@expo-google-fonts/rubik@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@expo-google-fonts/rubik/-/rubik-0.1.0.tgz#0a0f2352f342183daea7b72c7d4f9e452962a5db"
-  integrity sha512-sIy8rVobcxbtGQkPdnDquyM86vNw3mneEXCVqcCo+veNd1eloY4oGXs8q4e6zSV1NpZ2nD0nE8fFMKizJNeoPg==
+"@expo-google-fonts/inter@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/inter/-/inter-0.2.2.tgz#bd5624be6c92e7621aa9ddb5bd72757604729121"
+  integrity sha512-dU6mSczI2xkRZbUhQQ5VB+D4AqLOF8ufCIfA1iBjrPZ/Qnka88E5Ez2Mvm41exdKR76norVvYD5GJIQYEEoO/Q==
 
 "@expo/config-plugins@4.0.18":
   version "4.0.18"
@@ -1655,9 +1645,9 @@
   integrity sha512-/THyiqyQAP9AfARo4pF+aCGcyiQ94tX/Is2I7HofNRqoYLgN1PBoOWu2/zTA5zMxzP5EFutMtWtGAFRKUe961Q==
 
 "@types/node@*":
-  version "18.7.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.4.tgz#95baa50846ae112a7376869d49fec23b2506c69d"
-  integrity sha512-RzRcw8c0B8LzryWOR4Wj7YOTFXvdYKwvrb6xQQyuDfnlTxwYXGCV5RZ/TEbq5L5kn+w3rliHAUyRcG1RtbmTFg==
+  version "18.7.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.5.tgz#f1c1d4b7d8231c0278962347163656f9c36f3e83"
+  integrity sha512-NcKK6Ts+9LqdHJaW6HQmgr7dT/i3GOHG+pt6BiWv++5SnjtRd4NXeiuN2kA153SjhXPR/AhHIPHPbrsbpUVOww==
 
 "@types/yargs-parser@*":
   version "21.0.0"
@@ -4770,13 +4760,6 @@ react-native-codegen@^0.0.6:
     flow-parser "^0.121.0"
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
-
-react-native-stopwatch-timer@0.0.21:
-  version "0.0.21"
-  resolved "https://registry.yarnpkg.com/react-native-stopwatch-timer/-/react-native-stopwatch-timer-0.0.21.tgz#52c39f603e36c538bed3466212b1bfb350ed452f"
-  integrity sha512-qFFsD85NkBT1nxo32HMGq3XAtQyMC09p9ZDIEuOED2BOxgs0UpWg/FSTA0MmEoIKMyXUwSE5VxEzBaGP3z1HFw==
-  dependencies:
-    prop-types "^15.7.2"
 
 react-native-web@~0.13.12:
   version "0.13.18"

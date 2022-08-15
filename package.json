@@ -8,9 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@expo-google-fonts/arimo": "^0.1.0",
-    "@expo-google-fonts/orbitron": "^0.1.0",
-    "@expo-google-fonts/rubik": "^0.1.0",
+    "@expo-google-fonts/inter": "^0.2.2",
     "@react-native-community/datetimepicker": "4.0.0",
     "@react-native-community/slider": "4.1.12",
     "@unimodules/core": "~7.2.0",
@@ -24,12 +22,10 @@
     "react": "latest",
     "react-dom": "16.13.1",
     "react-native": "0.64.3",
-    "react-native-stopwatch-timer": "0.0.21",
     "react-native-web": "~0.13.12",
     "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
-  },
-  "private": true
+  }
 }
