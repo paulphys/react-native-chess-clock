@@ -8,17 +8,47 @@ import Card from '../components/card';
 
 
 export default function Menu({showModal, openAndCloseModal, showGames, openAndCloseGames, setTimers, resetTimers, moveCounter, pauseGame}){
+    let body = ""
+
+    if (moveCounter == 0) {
+        body = (
+            <>
+            {/*<Text style={styles.icon}>
+                <MaterialIcons style={styles.icon} size={35} color="white" name="view-list" onPress={openAndCloseGames}/> 
+        </Text> */}
+            <Text style={styles.icon}>
+                <MaterialIcons style={styles.icon} size={34} color="white" name="settings" onPress={openAndCloseModal} />
+            </Text>
+            </>
+        )
+    } else {
+        body = (
+            <>
+            <Text style={styles.icons}>
+                <MaterialIcons style={styles.icon} size={34} color="white" name="replay" onPress={resetTimers}/>
+            </Text>
+            <Text style={styles.text}>
+                 Move {moveCounter}
+            </Text>
+            <Text style={styles.icons}>
+                <MaterialIcons style={styles.icon} size={34} color="white" name="pause" onPress={pauseGame}/>
+            </Text>
+            </>
+        )
+    }
+
     return(
         <View style={styles.menu}>
             <Modal visible={showModal} animationType='none'>           
                 <View style={styles.modal}>      
                     <View style={styles.container}>
-                        <CustomButton text="1" time="1" setTimers={setTimers}/>
-                        <CustomButton text="3" time="3" setTimers={setTimers}/>
-                        <CustomButton text="5" time="5" setTimers={setTimers}/>
-                        <CustomButton text="10" time="10" setTimers={setTimers}/>
-                        <CustomButton text="15" time="15" setTimers={setTimers}/>
-                        <CustomButton text="30" time="30" setTimers={setTimers}/>
+                        <CustomButton text="1/0" time="1" setTimers={setTimers}/>
+                        <CustomButton text="3/0" time="3" setTimers={setTimers}/>
+                        <CustomButton text="5/3" time="5" setTimers={setTimers}/>
+                        <CustomButton text="10/0" time="10" setTimers={setTimers}/>
+                        <CustomButton text="10/5" time="15" setTimers={setTimers}/>
+                        <CustomButton text="15/10" time="30" setTimers={setTimers}/>
+                        <CustomButton text="30/0" time="30" setTimers={setTimers}/>
                    </View>    
                         </View>
                   
@@ -26,13 +56,10 @@ export default function Menu({showModal, openAndCloseModal, showGames, openAndCl
 
                 <Modal visible={showGames} animationType='none'>           
                     <View style={styles.modal}>           
-                        <CustomButton text='Back' color='black' onPress={openAndCloseGames}/>
+                        <CustomButton text='Back' onPress={openAndCloseModal}/>
                     </View>
                 </Modal>
-                
-            <MaterialIcons style={styles.icon} size={34} color="white" name="replay" onPress={resetTimers}/>
-                <Text style={styles.icon}>{moveCounter == 0 ? <MaterialIcons style={styles.icon} size={35} color="white" name="view-list" onPress={openAndCloseGames}/> : <Text style={styles.text}> Move {moveCounter} </Text>}</Text>
-            <Text style={styles.icon}>{moveCounter == 0 ? <MaterialIcons style={styles.icon} size={34} color="white" name="settings" onPress={openAndCloseModal} /> : <MaterialIcons style={styles.icon} size={34} color="white" name="pause" onPress={pauseGame}/>}</Text>
+                {body}
         </View>
     )
 }
@@ -40,22 +67,23 @@ export default function Menu({showModal, openAndCloseModal, showGames, openAndCl
 const styles = StyleSheet.create({
     timebutton: {
         backgroundColor: "black",
-
     },
     menu: {
         //flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-around',
-        padding: 2,
 
         
     },
     icon: {
-        paddingHorizontal: 40,
+        paddingHorizontal: 0,
         alignSelf: 'center',
         justifyContent: 'space-between',
         alignItems: 'center',
-        alignSelf: 'center',       
+    },
+        icons: {
+        paddingHorizontal: 40,
+
     },
     modal: {
         flex: 1,
@@ -73,9 +101,8 @@ const styles = StyleSheet.create({
     container: {
         marginTop: 50,
         flex: 1,
-        padding: 16,
-        
-        
+        padding: 8,
+          
     },
     text: {
         justifyContent: 'center',

@@ -5,14 +5,33 @@ import { StyleSheet, Text, View, TouchableOpacity, Alert, Modal } from 'react-na
 import { useFonts, Inter_400Regular, Inter_700Bold } from '@expo-google-fonts/inter';
 import Menu from './components/menu';
 import Games from './components/games'
-import { Timer } from './lib/stopwatch';
+import { Timer } from './lib/timer';
+import { Audio } from 'expo-av'
 
+
+export default function App() {
+  const [sound, setSound] = useState();
+
+  async function playSound() {
+    console.log('Loading Sound');
+    const { sound } = await Audio.Sound.createAsync(
+       require('./assets/clicky.wav')
+    );
+    setSound(sound);
+
+    console.log('Playing Sound');
+    await sound.replayAsync(); }
+    useEffect(() => {
+    return sound
+      ? () => {
+          console.log('Unloading Sound');
+          sound.unloadAsync(); }
+      : undefined;
+  }, [sound]);
 
  
-export default function App() {
-
   let winner = "white";
-  let white = 600000;
+  let white = 600000; 
   let black = 600000;
 
   const [ showModal, setShowModal] = useState(false);
@@ -84,9 +103,8 @@ export default function App() {
 
       setIsBlackTurn(false);
       setIsWhiteTurn(false);
-      setWhiteTimerDuration(white);
-      setBlackTimerDuration(black);
-
+      setWhiteTimerDuration(whiteTimerDuration);
+      setBlackTimerDuration(blackTimerDuration);
       setMoveCounter(0);
   }
 
@@ -103,13 +121,18 @@ export default function App() {
     setResetBlackClock(false);
     setIsBlackTurn(true);
     setIsWhiteTurn(false);
+    
+  }
+
+  const playtheSound = () => {
+    playSound()
   }
 
   const pauseGame = () => {
-    setResetWhiteClock(false);
-    setResetBlackClock(false);
-    setIsWhiteTurn(false);
     setIsBlackTurn(false);
+    setIsWhiteTurn(false);
+    setMoveCounter(69)
+
   }
 
   const handleBlackPress = () => {
@@ -125,7 +148,7 @@ export default function App() {
     "Time is up!",
     "Winner: " + winner,
     [
-        { text: "OK", onPress: () => {
+        { text: "Okay", onPress: () => {
           resetTimers();       
           } 
         } 
@@ -159,10 +182,10 @@ export default function App() {
               //console.log(time);
             }}  
           />       
-        </TouchableOpacity>              
+        </TouchableOpacity>
       </View>
       <View style={styles.menu}>
-        <Menu showModal={showModal} moveCounter={moveCounter} openAndCloseModal={openAndCloseModal} showGames={showGames} openAndCloseGames={openAndCloseGames} setTimers={setTimers} resetTimers={resetTimers} />
+        <Menu showModal={showModal} moveCounter={moveCounter} openAndCloseModal={openAndCloseModal} showGames={showGames} openAndCloseGames={openAndCloseGames} setTimers={setTimers} resetTimers={resetTimers} pauseGame={pauseGame} />
       </View>
       <View style={styles.whiteField}> 
         <TouchableOpacity onPress={handleWhitePress} style={styles.blackOpacity} disabled={isBlackTurn || moveCounter == 0}>
@@ -228,11 +251,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    width:"100%"
   },
   blackOpacity: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    width: "100%"
   }
 
 });
