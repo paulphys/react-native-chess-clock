@@ -11,7 +11,6 @@ import {
 } from 'react-native'
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons'
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { Formik } from 'formik'
 import CustomButton from '../components/button'
 import Card from '../components/card'
 
@@ -140,7 +139,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     icons: {
-        paddingHorizontal: 40,
+        paddingHorizontal: 60,
     },
     modal: {
         flex: 1,
