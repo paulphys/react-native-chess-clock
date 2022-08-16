@@ -9,3 +9,12 @@
   <img src="assets/screen1.png" width="250" /> 
   <img src="assets/screen3.png" width="250" />
 </p>
+
+## Develop locally
+
+```bash
+git clone https://github.com/paulphys/chessclock
+cd chessclock
+yarn
+yarn dev
+```
