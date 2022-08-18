@@ -106,7 +106,6 @@ export default function App() {
             setResetBlackClock(true)
             setResetWhiteClock(true)
         }
-
         setIsBlackTurn(false)
         setIsWhiteTurn(false)
         setWhiteTimerDuration(whiteTimerDuration)
@@ -207,7 +206,8 @@ export default function App() {
                             winner = 'white'
                             createThreeButtonAlert(winner)
                         }}
-                        getTime={(time) => {}}
+                        getTime={(time) => {
+                        }}
                     />
                 </TouchableOpacity>
             </View>

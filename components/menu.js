@@ -55,16 +55,18 @@ export default function Menu({
     if (moveCounter == 0) {
         body = (
             <>
-                {/*<Text style={styles.icon}>
-                    <MaterialIcons style={styles.icon} size={35} color="white" name="view-list" onPress={openAndCloseGames}/> 
-                 </Text> */}
-                <View style={styles.icon}>
+                <View style={styles.row}>
+                    <View style={styles.rowicon}>
+                        <MaterialIcons style={styles.icon} size={35} color="white" name="view-list" onPress={openAndCloseGames}/> 
+                    </View>
+                    <View style={styles.rowicon}>
                     <MaterialIcons
                         size={34}
                         color="white"
                         name="settings"
                         onPress={openAndCloseModal}
                     />
+                </View>
                 </View>
             </>
         )
@@ -154,7 +156,7 @@ export default function Menu({
 
             <Modal visible={showGames} animationType="none">
                 <View style={styles.modal}>
-                    <CustomButton text="Back" onPress={openAndCloseModal} />
+                    <Button title="Back" onPress={openAndCloseGames}/> 
                 </View>
             </Modal>
             {body}
