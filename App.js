@@ -21,36 +21,38 @@ export default function App() {
     const [sound, setSound] = useState()
 
     async function playSound() {
-        console.log('Loading Sound')
         const { sound } = await Audio.Sound.createAsync(
             require('./assets/clicky.wav')
         )
         setSound(sound)
-
-        console.log('Playing Sound')
-        await sound.replayAsync()
+        await sound.playAsync()
     }
     useEffect(() => {
         return sound
-            ? () => {
-                  console.log('Unloading Sound')
-                  sound.unloadAsync()
-              }
-            : undefined
-    }, [sound])
+        ? () => {
+            sound.unloadAsync(); }
+        : undefined;
+    }, [sound]);
 
     let winner = 'white'
-    let white = 600000
-    let black = 600000
+    let pauser = 'white'
+    let white_timer = 600000
+    let black_timer = 600000
+    let inc = 0
+
+    const [isIncrement, setIncrement] = useState(inc)
+
+    const [isPaused, setPaused] = useState(false)
+    const [whoPaused, setwhoPaused] = useState(pauser)
 
     const [showModal, setShowModal] = useState(false)
     const [showGames, setGamesModal] = useState(false)
 
-    const [whiteTimerDuration, setWhiteTimerDuration] = useState(white)
+    const [whiteTimerDuration, setWhiteTimerDuration] = useState(white_timer)
     const [isWhiteTurn, setIsWhiteTurn] = useState(false)
     const [resetWhiteClock, setResetWhiteClock] = useState(false)
 
-    const [blackTimerDuration, setBlackTimerDuration] = useState(black)
+    const [blackTimerDuration, setBlackTimerDuration] = useState(black_timer)
     const [isBlackTurn, setIsBlackTurn] = useState(false)
     const [resetBlackClock, setResetBlackClock] = useState(false)
 
@@ -59,7 +61,7 @@ export default function App() {
 
     const [moveCounter, setMoveCounter] = useState(0)
 
-    const setTimers = (whiteTimer, blackTimer) => {
+    const setTimers = (whiteTimer, blackTimer, increment) => {
         white = parseInt(whiteTimer)
         black = parseInt(blackTimer)
 
@@ -84,10 +86,9 @@ export default function App() {
         setResetWhiteClock(true)
         setResetBlackClock(true)
 
-        setMoveCounter(0)
+        setIncrement(increment)
 
-        console.log(whiteTimerDuration)
-        console.log(blackTimerDuration)
+        setMoveCounter(0)
     }
 
     const resetTimers = () => {
@@ -110,6 +111,7 @@ export default function App() {
         setIsWhiteTurn(false)
         setWhiteTimerDuration(whiteTimerDuration)
         setBlackTimerDuration(blackTimerDuration)
+        setIncrement(isIncrement)
         setMoveCounter(0)
     }
 
@@ -126,16 +128,7 @@ export default function App() {
         setResetBlackClock(false)
         setIsBlackTurn(true)
         setIsWhiteTurn(false)
-    }
-
-    const playtheSound = () => {
-        playSound()
-    }
-
-    const pauseGame = () => {
-        setIsBlackTurn(false)
-        setIsWhiteTurn(false)
-        setMoveCounter(69)
+        //playSound()
     }
 
     const handleBlackPress = () => {
@@ -144,17 +137,49 @@ export default function App() {
         setIsWhiteTurn(true)
         setIsBlackTurn(false)
         setMoveCounter(moveCounter + 1)
+        //playSound()
+    }
+
+    const pauseGame = () => {
+        if (!isPaused && isWhiteTurn) {
+            setwhoPaused('white')
+            setPaused(true)
+            setIsBlackTurn(false)
+            setIsWhiteTurn(false)
+        }
+        if (isPaused && whoPaused == 'white') {
+            setPaused(false)
+            setIsBlackTurn(false)
+            setIsWhiteTurn(true)
+        }
+        if (!isPaused && isBlackTurn) {
+            setwhoPaused('black')
+            setPaused(true)
+            setIsBlackTurn(false)
+            setIsWhiteTurn(false)
+        }
+        if (isPaused && whoPaused == 'black') {
+            setPaused(false)
+            setIsBlackTurn(true)
+            setIsWhiteTurn(false)
+        }
     }
 
     const createThreeButtonAlert = (winner) =>
-        Alert.alert('Time is up!', 'Winner: ' + winner, [
+        Alert.alert('Time is up!', winner + ' wins', [
             {
-                text: 'Okay',
+                text: 'Close',
                 onPress: () => {
                     resetTimers()
                 },
             },
         ])
+
+    const playClick = () => {
+        useEffect(() => {
+            playSound()
+        })
+    }
 
     let [fontsLoaded] = useFonts({
         Inter_400Regular,
@@ -170,22 +195,19 @@ export default function App() {
                 <TouchableOpacity
                     onPress={handleBlackPress}
                     style={styles.blackOpacity}
-                    disabled={isWhiteTurn}
+                    disabled={isWhiteTurn || isPaused}
                 >
                     <Timer
                         totalDuration={whiteTimerDuration}
-                        msecs={false}
+                        increment={isIncrement}
                         start={isBlackTurn}
                         reset={resetBlackClock}
                         options={blackFieldOptions}
                         handleFinish={() => {
-                            //white win
                             winner = 'white'
                             createThreeButtonAlert(winner)
                         }}
-                        getTime={(time) => {
-                            //console.log(time);
-                        }}
+                        getTime={(time) => {}}
                     />
                 </TouchableOpacity>
             </View>
@@ -199,27 +221,29 @@ export default function App() {
                     setTimers={setTimers}
                     resetTimers={resetTimers}
                     pauseGame={pauseGame}
+                    isPaused={isPaused}
+                    isBlackTurn={isBlackTurn}
+                    isWhiteTurn={isWhiteTurn}
                 />
             </View>
             <View style={styles.whiteField}>
                 <TouchableOpacity
                     onPress={handleWhitePress}
                     style={styles.blackOpacity}
-                    disabled={isBlackTurn || moveCounter == 0}
+                    disabled={isBlackTurn || moveCounter == 0 || isPaused}
                 >
                     <Timer
                         totalDuration={blackTimerDuration}
-                        msecs={false}
+                        increment={isIncrement}
                         start={isWhiteTurn}
                         reset={resetWhiteClock}
                         options={whiteFieldOptions}
                         handleFinish={() => {
-                            //black win
-                            winner = 'black'
+                            winner = 'Black'
                             createThreeButtonAlert(winner)
                         }}
                         getTime={(time) => {
-                            //console.log(time);
+                            //console.log(time)
                         }}
                     />
                 </TouchableOpacity>
@@ -231,7 +255,6 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        //alignItems: 'center',
         justifyContent: 'center',
     },
     blackField: {

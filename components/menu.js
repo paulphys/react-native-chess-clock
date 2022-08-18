@@ -23,48 +23,68 @@ export default function Menu({
     resetTimers,
     moveCounter,
     pauseGame,
+    isPaused,
+    increment,
+    setIncrement
 }) {
+    let gameState = ''
+    if (isPaused) {
+        gameState = (
+            <View style={styles.rowicon}>
+                <MaterialIcons
+                    size={34}
+                    color="white"
+                    name="play-arrow"
+                    onPress={pauseGame}
+                />
+            </View>
+        )
+    } else {
+        gameState = (
+            <View style={styles.rowicon}>
+                <MaterialIcons
+                    size={34}
+                    color="white"
+                    name="pause"
+                    onPress={pauseGame}
+                />
+            </View>
+        )
+    }
     let body = ''
-
     if (moveCounter == 0) {
         body = (
             <>
                 {/*<Text style={styles.icon}>
-                <MaterialIcons style={styles.icon} size={35} color="white" name="view-list" onPress={openAndCloseGames}/> 
-        </Text> */}
-                <Text style={styles.icon}>
+                    <MaterialIcons style={styles.icon} size={35} color="white" name="view-list" onPress={openAndCloseGames}/> 
+                 </Text> */}
+                <View style={styles.icon}>
                     <MaterialIcons
-                        style={styles.icon}
                         size={34}
                         color="white"
                         name="settings"
                         onPress={openAndCloseModal}
                     />
-                </Text>
+                </View>
             </>
         )
     } else {
         body = (
             <>
-                <Text style={styles.icons}>
-                    <MaterialIcons
-                        style={styles.icon}
-                        size={34}
-                        color="white"
-                        name="replay"
-                        onPress={resetTimers}
-                    />
-                </Text>
-                <Text style={styles.text}>Move {moveCounter}</Text>
-                <Text style={styles.icons}>
-                    <MaterialIcons
-                        style={styles.icon}
-                        size={34}
-                        color="white"
-                        name="pause"
-                        onPress={pauseGame}
-                    />
-                </Text>
+                <View style={styles.row}>
+                    <View style={styles.rowicon}>
+                        <MaterialIcons
+                            size={34}
+                            color="white"
+                            name="replay"
+                            onPress={resetTimers}
+                        />
+                    </View>
+                    <View style={styles.rowicon}>
+                        <Text style={styles.text}>Move {moveCounter}</Text>
+                    </View>
+                    {gameState}
+                </View>
             </>
         )
     }
@@ -77,36 +97,55 @@ export default function Menu({
                         <CustomButton
                             text="1/0"
                             time="1"
+                            inc="0"
+                            setTimers={setTimers}
+                        />
+                        <CustomButton
+                            text="1/2"
+                            time="1"
+                            inc="2"
                             setTimers={setTimers}
                         />
                         <CustomButton
                             text="3/0"
                             time="3"
+                            inc="0"
                             setTimers={setTimers}
                         />
                         <CustomButton
                             text="5/3"
                             time="5"
+                            inc="3"
                             setTimers={setTimers}
                         />
                         <CustomButton
                             text="10/0"
                             time="10"
+                            inc="0"
                             setTimers={setTimers}
                         />
                         <CustomButton
                             text="10/5"
+                            time="10"
+                            inc="5"
+                            setTimers={setTimers}
+                        />
+                        <CustomButton
+                            text="15/0"
                             time="15"
+                            inc="0"
                             setTimers={setTimers}
                         />
                         <CustomButton
                             text="15/10"
-                            time="30"
+                            time="15"
+                            inc="10"
                             setTimers={setTimers}
                         />
                         <CustomButton
                             text="30/0"
                             time="30"
+                            inc="0"
                             setTimers={setTimers}
                         />
                     </View>
@@ -124,22 +163,22 @@ export default function Menu({
 }
 
 const styles = StyleSheet.create({
-    timebutton: {
-        backgroundColor: 'black',
+    row: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
     },
+    rowicon: {},
     menu: {
-        //flex: 1,
         flexDirection: 'row',
         justifyContent: 'space-around',
     },
     icon: {
-        paddingHorizontal: 0,
+        paddingHorizontal: 1,
         alignSelf: 'center',
         justifyContent: 'space-between',
         alignItems: 'center',
-    },
-    icons: {
-        paddingHorizontal: 60,
     },
     modal: {
         flex: 1,
@@ -155,15 +194,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     container: {
-        marginTop: 50,
+        marginTop: 40,
         flex: 1,
         padding: 8,
     },
     text: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'center',
-        //fontWeight: 'bold',
         fontSize: 20,
         fontFamily: 'Inter_700Bold',
         color: 'white',
@@ -171,7 +206,6 @@ const styles = StyleSheet.create({
     inputsContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        //justifyContent: 'center',
         alignItems: 'center',
         padding: 6,
         textAlignVertical: 'center',
