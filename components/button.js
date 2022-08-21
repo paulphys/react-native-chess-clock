@@ -1,13 +1,7 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity, Text, View } from 'react-native'
 
-export default function CustomButton({
-    text,
-    onPress,
-    setTimers,
-    time,
-    inc,
-}) {
+export default function CustomButton({ text, onPress, setTimers, time, inc }) {
     return (
         <TouchableOpacity
             onPress={(values) => {
@@ -17,7 +11,7 @@ export default function CustomButton({
                 setTimers(whiteTimer, blackTimer, increment)
             }}
         >
-            <View style={[styles.button, { backgroundColor: "black" }]}>
+            <View style={[styles.button, { backgroundColor: 'black' }]}>
                 <Text style={styles.buttonText}>{text}</Text>
             </View>
         </TouchableOpacity>
@@ -35,7 +29,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontWeight: 'bold',
         textTransform: 'uppercase',
-        fontSize: 31,
+        fontSize: 25,
         textAlign: 'center',
     },
 })

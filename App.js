@@ -16,8 +16,52 @@ import {
 import Menu from './components/menu'
 import { Timer } from './lib/timer'
 import { Audio } from 'expo-av'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import uuid from 'react-native-uuid'
 
 export default function App() {
+    const value = {
+        variant: '1+0',
+        white: 'naschira',
+        black: 'paul',
+        winner: 'white',
+    }
+
+    const postGame = async () => {
+        try {
+            await AsyncStorage.setItem(uuid.v4(), JSON.stringify(value))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    /*
+    const getAllGames = async () => {
+        try {
+            const keys = await AsyncStorage.getAllKeys();
+            const result = await AsyncStorage.multiGet(keys);
+
+            console.log(result[0])
+        } catch (error) {
+            console.error(error)
+        }
+    }
+*/
+
+    const getAllGames = async () => {
+        try {
+            const result: any = {}
+            const keys = await AsyncStorage.getAllKeys()
+            for (const key of keys) {
+                const val = await AsyncStorage.getItem(key)
+                result[key] = val
+            }
+            return result
+        } catch (error) {
+            alert(error)
+        }
+    }
+
     const [sound, setSound] = useState()
 
     async function playSound() {
@@ -29,10 +73,11 @@ export default function App() {
     }
     useEffect(() => {
         return sound
-        ? () => {
-            sound.unloadAsync(); }
-        : undefined;
-    }, [sound]);
+            ? () => {
+                  sound.unloadAsync()
+              }
+            : undefined
+    }, [sound])
 
     let winner = 'white'
     let pauser = 'white'
@@ -206,8 +251,7 @@ export default function App() {
                             winner = 'white'
                             createThreeButtonAlert(winner)
                         }}
-                        getTime={(time) => {
-                        }}
+                        getTime={(time) => {}}
                     />
                 </TouchableOpacity>
             </View>
@@ -224,6 +268,8 @@ export default function App() {
                     isPaused={isPaused}
                     isBlackTurn={isBlackTurn}
                     isWhiteTurn={isWhiteTurn}
+                    postGame={postGame}
+                    getAllGames={getAllGames}
                 />
             </View>
             <View style={styles.whiteField}>
