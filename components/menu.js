@@ -197,8 +197,12 @@ export default function Menu({
                 <View style={styles.modal}>
                     <View style={styles.container}>
                         <Text style={styles.h1}>Games</Text>
-                        <Games getAllGames={getAllGames}/>
-                        <Button title="Back" color="#04dbad" onPress={openAndCloseGames} />
+                        <Games getAllGames={getAllGames} />
+                        <Button
+                            title="Back"
+                            color="#04dbad"
+                            onPress={openAndCloseGames}
+                        />
                         <Button title="post game" onPress={postGame} />
                         <Button title="get all games" onPress={getAllGames} />
                     </View>
@@ -214,8 +218,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Inter_700Bold',
         color: 'white',
         fontSize: 50,
-        alignSelf: "center"
-
+        alignSelf: 'center',
     },
     variantText: {
         fontSize: 22,

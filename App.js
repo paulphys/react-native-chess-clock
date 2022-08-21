@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import AppLoading from 'expo-app-loading'
 import {
     StyleSheet,
@@ -56,29 +56,30 @@ export default function App() {
                 const val = await AsyncStorage.getItem(key)
                 result[key] = val
             }
-            return result
+            console.log(result[1])
         } catch (error) {
             alert(error)
         }
     }
 
-    const [sound, setSound] = useState()
+    const sound = useRef(new Audio.Sound())
 
-    async function playSound() {
-        const { sound } = await Audio.Sound.createAsync(
+    useEffect(() => {
+        return () => sound.current.unloadAsync()
+    }, [])
+
+    const playSound = async () => {
+        const { sound: playbackObject } = await Audio.Sound.createAsync(
             require('./assets/clicky.wav')
         )
-        setSound(sound)
-        await sound.playAsync()
+        sound.current = playbackObject
+        const checkLoaded = await sound.current.getStatusAsync()
+        if (checkLoaded.isLoaded != true) {
+            console.log('error in loading sound')
+        } else {
+            await sound.current.playAsync()
+        }
     }
-    useEffect(() => {
-        return sound
-            ? () => {
-                  sound.unloadAsync()
-              }
-            : undefined
-    }, [sound])
-
     let winner = 'white'
     let pauser = 'white'
     let white_timer = 600000
@@ -168,20 +169,20 @@ export default function App() {
     }
 
     const handleWhitePress = () => {
+        playSound()
         setResetWhiteClock(false)
         setResetBlackClock(false)
         setIsBlackTurn(true)
         setIsWhiteTurn(false)
-        //playSound()
     }
 
     const handleBlackPress = () => {
+        playSound()
         setResetWhiteClock(false)
         setResetBlackClock(false)
         setIsWhiteTurn(true)
         setIsBlackTurn(false)
         setMoveCounter(moveCounter + 1)
-        //playSound()
     }
 
     const pauseGame = () => {
