@@ -35,19 +35,6 @@ export default function App() {
         }
     }
 
-    /*
-    const getAllGames = async () => {
-        try {
-            const keys = await AsyncStorage.getAllKeys();
-            const result = await AsyncStorage.multiGet(keys);
-
-            console.log(result[0])
-        } catch (error) {
-            console.error(error)
-        }
-    }
-*/
-
     const getAllGames = async () => {
         try {
             const result: any = {}
@@ -56,7 +43,7 @@ export default function App() {
                 const val = await AsyncStorage.getItem(key)
                 result[key] = val
             }
-            console.log(result[1])
+            return result
         } catch (error) {
             alert(error)
         }
@@ -84,9 +71,9 @@ export default function App() {
     let pauser = 'white'
     let white_timer = 600000
     let black_timer = 600000
-    let inc = 0
+    let inc = 5000
 
-    const [isIncrement, setIncrement] = useState(inc)
+    const [Increment, setIncrement] = useState(inc)
 
     const [isPaused, setPaused] = useState(false)
     const [whoPaused, setwhoPaused] = useState(pauser)
@@ -110,6 +97,7 @@ export default function App() {
     const setTimers = (whiteTimer, blackTimer, increment) => {
         white = parseInt(whiteTimer)
         black = parseInt(blackTimer)
+        inc = parseInt(increment)
 
         setWhiteTimerDuration(white)
         setBlackTimerDuration(black)
@@ -132,7 +120,7 @@ export default function App() {
         setResetWhiteClock(true)
         setResetBlackClock(true)
 
-        setIncrement(increment)
+        setIncrement(inc)
 
         setMoveCounter(0)
     }
@@ -156,7 +144,7 @@ export default function App() {
         setIsWhiteTurn(false)
         setWhiteTimerDuration(whiteTimerDuration)
         setBlackTimerDuration(blackTimerDuration)
-        setIncrement(isIncrement)
+        setIncrement(Increment)
         setMoveCounter(0)
     }
 
@@ -244,7 +232,7 @@ export default function App() {
                 >
                     <Timer
                         totalDuration={whiteTimerDuration}
-                        increment={isIncrement}
+                        increment={Increment}
                         start={isBlackTurn}
                         reset={resetBlackClock}
                         options={blackFieldOptions}
@@ -271,6 +259,8 @@ export default function App() {
                     isWhiteTurn={isWhiteTurn}
                     postGame={postGame}
                     getAllGames={getAllGames}
+                    Increment={Increment}
+                    setIncrement={setIncrement}
                 />
             </View>
             <View style={styles.whiteField}>
@@ -281,7 +271,7 @@ export default function App() {
                 >
                     <Timer
                         totalDuration={blackTimerDuration}
-                        increment={isIncrement}
+                        increment={Increment}
                         start={isWhiteTurn}
                         reset={resetWhiteClock}
                         options={whiteFieldOptions}
