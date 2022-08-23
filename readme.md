@@ -20,3 +20,12 @@ cd chessclock
 yarn
 yarn dev
 ```
+## To-Do's
+
+- Fix increments not working after reselection
+- Fix increments adding up on resume
+- Break out mono logic into components
+- Add option to configure custom time variants
+- Implement match tracking with `AsyncStorage`
+- Add option to export game data
+- Convert to TypeScript + refactoring
