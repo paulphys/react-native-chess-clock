@@ -1,6 +1,6 @@
 🚧 a work in progress 🚧
 
-# chessclock
+# React Native Chess Clock
 
 > Chess clock with built-in match tracking (React Native)
 
@@ -15,8 +15,8 @@
 ## Develop locally
 
 ```bash
-git clone https://github.com/paulphys/chessclock
-cd chessclock
+git clone https://github.com/paulphys/react-native-chess-clock
+cd react-native-chess-clock
 yarn
 yarn dev
 ```
